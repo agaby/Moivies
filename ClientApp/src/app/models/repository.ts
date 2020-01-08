@@ -10,8 +10,9 @@ const studiosUrl = "/api/studios";
 export class Repository {
 
 	public movieData: Movie;
-	public movies = [];
-	public studios = [];
+	public movie: Movie;
+	public movies: Movie [];
+	public studios : Studio [];
 	private filterObject = new Filter();
 
 	constructor(private http: HttpClient) {
@@ -22,7 +23,7 @@ export class Repository {
 
 	getMovie(id: number) { //after: is the return type
 		// console.log("Movie Data requested");
-		this.http.get(moviesUrl + "/" + id).subscribe(Response => { this.movieData = Response })
+		this.http.get(moviesUrl + "/" + id).subscribe(response => { this.movie = response })
 	}
 
 	getMovies(related = false) {
