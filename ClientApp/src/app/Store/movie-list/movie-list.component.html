@@ -3,7 +3,7 @@
         <div class="card-header">
             <span class="h4">
                 <img src="https://{{movie.image}}" alt="[Image Missing]" width="70px" />{{movie.name}}
-
+                <store-ratings [movie]="movie"></store-ratings>
             </span>
             <span class="float-right badge badge-pill badge-primary">
                 {{movie.price | currency:"USD"}}

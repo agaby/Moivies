@@ -11,9 +11,15 @@ export class MovieListComponent implements OnInit {
 
   constructor(private repo: Repository) { }
   
+  // using JS array slice method to select a subset of the movie obj available in the repo
   get movies(): Movie[]{
-    return this.repo.movies;
-  }
+    if (this.repo.movies != null && this.repo.movies.length > 0) {
+      let pageIndex = (this.repo.pagination.currentPage - 1)
+          * this.repo.pagination.moviesPerPage;
+      return this.repo.movies.slice(pageIndex,
+          pageIndex + this.repo.pagination.moviesPerPage);
+  }  
+}
 
   ngOnInit() {
   }

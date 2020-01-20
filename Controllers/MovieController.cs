@@ -92,11 +92,13 @@ namespace DVDMovie.Controllers
                 return metadata? CreateMetadata(query): Ok(query);
             }
         }
-
+        // this function creates the metadata that the propery is set to 
+        //the sequence of movie objects requested by client 
+        //categories property is set using a linked query that produces an ordered set of distict category names 
         private IActionResult CreateMetadata(IEnumerable <Movie> movies){
             return Ok(new {
-                DataContext= movies,
-                catagories = context.Movies.Select(m => m.Category)
+                data= movies,
+                categories = context.Movies.Select(m => m.Category)
                 .Distinct().OrderBy(m =>m)
             });
         }

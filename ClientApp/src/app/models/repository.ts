@@ -1,7 +1,7 @@
 import { Movie } from "./movie.model";
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Filter } from './configClasses.repository';
+import { Filter, Pagination } from './configClasses.repository';
 import { Studio } from './studio.model';
 
 const moviesUrl = "/api/movies";
@@ -13,14 +13,21 @@ export class Repository {
 	public movie: Movie;
 	public movies: Movie [];
 	public studios : Studio [];
+	public categories: string[]= [];
 	private filterObject = new Filter();
+	private paginationObject = new Pagination();
 
 	constructor(private http: HttpClient) {
 		// this.filter.category = "drama";
 		this.filter.related = true;
 		this.getMovies()
 	}
-
+	get filter(): Filter {
+			return this.filterObject;
+	}
+	get pagination(): Pagination {
+		return this.paginationObject;
+	}
 	getMovie(id: number) { //after: is the return type
 		// console.log("Movie Data requested");
 		this.http.get(moviesUrl + "/" + id).subscribe(response => { this.movie = response })
@@ -36,9 +43,15 @@ export class Repository {
 		if (this.filter.search) {
 			url += "&search=" + this.filter.search;
 		}
+		//recieve new set of categories upon refreshing 
+		url += "&metadata=true";
+		this.http.get<any>(url)
+			.subscribe(response => {
+				this.movies = response.data;
+				this.categories = response.categories;
+				this.pagination.currentPage = 1;
 
-		this.http.get<Movie[]>(url)
-			.subscribe(response => this.movies = response)
+			});
 	}
 
 	getStudios() {
@@ -73,9 +86,7 @@ export class Repository {
 				}
 			});
 	}
-	get filter(): Filter {
-		return this.filterObject;
-	}
+	
 	replaceMovie(mov: Movie) {
 		let data = {
 			image:mov.image, name: mov.name, category: mov.category,
