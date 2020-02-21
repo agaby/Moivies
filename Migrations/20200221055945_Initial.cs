@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Movies.Migrations
 {
@@ -11,7 +12,7 @@ namespace Movies.Migrations
                 columns: table => new
                 {
                     StudioId = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
                     State = table.Column<string>(nullable: true)
@@ -26,7 +27,7 @@ namespace Movies.Migrations
                 columns: table => new
                 {
                     MovieId = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Image = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Category = table.Column<string>(nullable: true),
@@ -50,7 +51,7 @@ namespace Movies.Migrations
                 columns: table => new
                 {
                     RatingId = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Stars = table.Column<int>(nullable: false),
                     MovieId = table.Column<long>(nullable: true)
                 },

@@ -5,11 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using DVDMovie.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using DVDMovie.Models;
 using System;
+
 // using MvcOptions.EnableEndpointRouting;
 
 namespace DVDMovie
@@ -28,8 +29,11 @@ namespace DVDMovie
         {
             
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration
-                    ["Data:Movies:ConnectionString"]));
+                options.UseMySql(Configuration["Data:Movies:ConnectionString"]));
+            
+            // services.AddDbContext<DataContext>(options =>
+            //     options.UseSqlServer(Configuration
+            //         ["Data:Movies:ConnectionString"]));
 
             services.AddControllers().AddNewtonsoftJson();
             services.AddControllers().AddNewtonsoftJson(options =>
