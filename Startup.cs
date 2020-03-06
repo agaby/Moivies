@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
+using MySql.Data.MySqlClient;
+
 // using MvcOptions.EnableEndpointRouting;
 
 namespace DVDMovie
@@ -26,10 +28,12 @@ namespace DVDMovie
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration
-                    ["Data:Movies:ConnectionString"]));
+                options.UseMySql(Configuration["Data:Movies:ConnectionString"]));
+
+            // services.AddDbContext<DataContext>(options =>
+            //     options.UseSqlServer(Configuration
+            //         ["Data:Movies:ConnectionString"]));
 
             services.AddControllers().AddNewtonsoftJson();
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -38,28 +42,23 @@ namespace DVDMovie
                 options.SerializerSettings.NullValueHandling=Newtonsoft.Json.NullValueHandling.Ignore;
             });
 
-            // services.AddMvc().AddJsonOptions(opts =>{
-            //     		opts.SerializerSettings.ReferenceLoopHandling
-            //        		 	= ReferenceLoopHandling.Serialize;
-            //             opts.SerializerSettings.NullValueHandling 
-            //                 = NullValueHandling.Ignore;
-            //     });
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddMvc(option => option.EnableEndpointRouting = false) .AddNewtonsoftJson();
-
+            IServiceCollection serviceCollection = services.AddDistributedMemoryCache();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            
+           
+            // services.AddDistributedMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,
-                                IHostingEnvironment env,
-                                DataContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, DataContext context)
         {
             if (env.IsDevelopment())
             {
