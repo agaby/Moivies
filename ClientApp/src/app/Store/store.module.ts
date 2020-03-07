@@ -7,18 +7,26 @@ import {MovieListComponent} from './movie-list/movie-list.component';
 import {MovieSelectionComponent} from './movie-selection/movie-selection.component';
 import {PaginationComponent} from './pagination/pagination.component';
 import {RatingsComponent} from './ratings/ratings.component';
+import {CartDetailComponent } from './cart-detail/cart-detail.component';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
+    CartDetailComponent,
     CartSummaryComponent,
     CategoryFilterComponent,
     MovieListComponent,
     PaginationComponent,
     MovieSelectionComponent,
-    RatingsComponent],
+    RatingsComponent,
+    
+  ],
   imports: [
     CommonModule,
-    BrowserModule
+    BrowserModule,
+    RouterModule,
+    FormsModule
   ],
   exports: [MovieSelectionComponent]
 })

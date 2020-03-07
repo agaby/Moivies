@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+// using MySQL.Data.EntityFrameworkCore.Extensions;
 
 namespace DVDMovie.Models{
     public class Movie{

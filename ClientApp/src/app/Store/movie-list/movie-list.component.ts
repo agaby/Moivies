@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Repository } from "../../models/repository";
 import { Movie } from "../../models/movie.model";
+import {Cart} from "../../models/cart.model";
 
 @Component({
   selector: 'store-movie-list',
@@ -9,7 +10,7 @@ import { Movie } from "../../models/movie.model";
 })
 export class MovieListComponent implements OnInit {
 
-  constructor(private repo: Repository) { }
+  constructor(private repo: Repository, private cart: Cart) { }
   
   // using JS array slice method to select a subset of the movie obj available in the repo
   get movies(): Movie[]{
@@ -19,6 +20,10 @@ export class MovieListComponent implements OnInit {
       return this.repo.movies.slice(pageIndex,
           pageIndex + this.repo.pagination.moviesPerPage);
   }  
+}
+addToCart(movie:Movie){
+  console.log("Adding to cart: "+ this.cart.itemCount);
+  this.cart.addMovie(movie);
 }
 
   ngOnInit() {

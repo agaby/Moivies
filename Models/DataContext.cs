@@ -1,12 +1,15 @@
 using Microsoft.EntityFrameworkCore;
+// using MySQL.Data.EntityFrameworkCore.Extensions;
 
 namespace DVDMovie.Models {
     public class DataContext : DbContext{
-    public DataContext(DbContextOptions<DataContext> opts) : base(opts){}
+    public DataContext(DbContextOptions<DataContext> opts)
+    : base(opts){}
     public DbSet<Movie> Movies {get; set;}
     public DbSet<Studio> Studios { get; set; }
     public DbSet<Rating> Ratings { get; set; }
     
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Movie>().HasMany<Rating>(m => m.Ratings)

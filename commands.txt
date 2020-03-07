@@ -1,0 +1,27 @@
+
+dotnet add package Microsoft.AspNetCore.JsonPatch
+dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson --version 3.1.0
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 3.1.0
+dotnet add package Pomelo.EntityFrameworkCore.MySql --version 3.1.1
+
+to fix db conn:
+----------------------------------------------
+sqllocaldb stop
+sqllocaldb delete
+dotnet ef database drop --force
+dotnet ef migrations remove
+dotnet ef migrations add Initial --context DataContext
+dotnet ef database update --context DataContext
+
+**To prepare DB to store session data**
+dotnet tool install --global dotnet-sql-cache --version 3.0
+dotnet add package Microsoft.Extensions.Caching.SqlServer --version 3.0
+-----------------------------------------------------------------------------------------------------------
+dotnet sql-cache create "Server=(localdb)\MSSQLLocalDB;Database=DVDMovie;Trusted_Connection=True;MultipleActiveResultSets=true" "dbo" "SessionData" 
+
+
+"ConnectionString": "Server=(root@localhost:3306);Database=DVDMovie;Trusted_Connection=True;MultipleActiveResultSets=true;uid=root;pwd=Agaby7love!;"
+"Server=(root@localhost:3306);Database=DVDMovie;Trusted_Connection=True;MultipleActiveResultSets=true;uid=root;pwd=Agaby7love!;"
+dotnet ef dbcontext scaffold "server=localhost; database=DVDMovie;user=root;pwd=Agaby7love!;" 
+
+ 
